@@ -1,0 +1,18 @@
+#phpstorm project folder
+.idea
+#nodejs folder
+/node_modules
+#public filder
+/public/hot
+/public/storage
+/storage/*.key
+#vendor folder
+/vendor
+#config file
+.env
+.env.backup
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
