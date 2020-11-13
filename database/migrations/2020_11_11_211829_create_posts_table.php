@@ -21,7 +21,7 @@ class CreatePostsTable extends Migration
                 ->references('id')
                 ->on('users');
             $table->boolean('publish');
-            $table->string('name', 50);
+            $table->string('name', 100);
             $table->string('slug', 50)
                 ->unique();
             $table->string('image')
