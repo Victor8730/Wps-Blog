@@ -13,9 +13,19 @@ class CreateMetasTable extends Migration
      */
     public function up()
     {
-        Schema::create('metas', function (Blueprint $table) {
+        Schema::create('metas', function(Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->bigInteger('post_id')
+                ->unsigned()
+                ->index();
+            $table->foreign('post_id')
+                ->references('id')
+                ->on('posts')
+                ->onDelete('cascade');
+            $table->string('description');
+            $table->string('keywords');
+            $table->string('title');
+            $table->string('h1');
         });
     }
 

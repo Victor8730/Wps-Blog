@@ -13,8 +13,22 @@ class CreateCommentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('comments', function (Blueprint $table) {
+        Schema::create('comments', function(Blueprint $table) {
             $table->id();
+            $table->string('name', 20);
+            $table->string('email', 30);
+            $table->boolean('status');
+            $table->bigInteger('post_id')
+                ->unsigned()
+                ->index();
+            $table->foreign('post_id')
+                ->references('id')
+                ->on('posts')
+                ->onDelete('cascade');
+            $table->integer('answer')
+                ->nullable();
+            $table->text('comment');
+            $table->string('ip', 20);
             $table->timestamps();
         });
     }
