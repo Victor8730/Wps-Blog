@@ -23,7 +23,6 @@ class CreateSettingsTable extends Migration
             $table->text('title');
             $table->text('description');
             $table->text('keywords');
-            $table->timestamps();
         });
     }
 

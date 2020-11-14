@@ -24,7 +24,7 @@ class CreateImagesTable extends Migration
                 ->onDelete('cascade');
             $table->string('slug', 50)
                 ->unique();
-            $table->string('image');
+            $table->string('name')->nullable();
             $table->string('alt');
             $table->string('title');
             $table->timestamps();

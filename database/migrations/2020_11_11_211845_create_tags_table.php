@@ -22,7 +22,7 @@ class CreateTagsTable extends Migration
         });
 
         Schema::create('post_tag', function(Blueprint $table) {
-            $table->integer('post_id')
+            $table->bigInteger('post_id')
                 ->unsigned()
                 ->index();
             $table->foreign('post_id')
@@ -30,7 +30,7 @@ class CreateTagsTable extends Migration
                 ->on('posts')
                 ->onDelete('cascade');
 
-            $table->integer('tag_id')
+            $table->bigInteger('tag_id')
                 ->unsigned()
                 ->index();
             $table->foreign('tag_id')
