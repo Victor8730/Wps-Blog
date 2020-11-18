@@ -18,8 +18,6 @@ use Carbon\Carbon;
  * @property string $slug
  * @property bool $publish
  * @property string|null $image
- * @property string $preview
- * @property string $content
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property array|Collection|Category[] $category
@@ -30,7 +28,7 @@ use Carbon\Carbon;
  * @method static Builder publish()
  * @method Builder whereSlug(string $slug)
  */
-class Post extends Model
+class Post extends LocalizedModel
 {
     use HasFactory;
 
@@ -47,12 +45,9 @@ class Post extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'name',
         'slug',
         'publish',
         'image',
-        'preview',
-        'content',
     ];
 
     /**
@@ -121,8 +116,8 @@ class Post extends Model
         return !$value ?: \Storage::url($value);
     }
 
-    public function getShortPreviewAttribute()
-    {
-        return Str::limit($this->preview, 30);
-    }
+//    public function getShortPreviewAttribute()
+//    {
+//        return Str::limit($this->preview, 30);
+//    }
 }

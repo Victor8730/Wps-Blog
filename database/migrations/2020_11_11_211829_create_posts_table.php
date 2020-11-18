@@ -21,14 +21,10 @@ class CreatePostsTable extends Migration
                 ->references('id')
                 ->on('users');
             $table->boolean('publish');
-            $table->string('name', 100);
             $table->string('slug', 50)
                 ->unique();
             $table->string('image')
                 ->nullable();
-            $table->text('preview')
-                ->nullable();
-            $table->text('content');
             $table->timestamps();
         });
     }
@@ -40,7 +36,7 @@ class CreatePostsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('posts');
         Schema::dropIfExists('post_tag');
+        Schema::dropIfExists('posts');
     }
 }

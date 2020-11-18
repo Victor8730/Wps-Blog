@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\View;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -13,10 +17,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::group(['prefix' => LaravelLocalization::setLocale()], function()
+{
+    /** ADD ALL LOCALIZED ROUTES INSIDE THIS GROUP **/
+
+    Route::get('test',function(){
+        return View::make('test');
+    });
+});
+
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/adm-panel', function () {
     return view('dashboard');
-})->name('dashboard');
+})->name('adm');
+
+Route::resource('/adm-panel/post', PostController::class)->middleware('auth');

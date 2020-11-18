@@ -20,5 +20,6 @@ return [
     'Sign in to your account' => 'Sign in to admin panel',
     'Email Password Reset Link' => 'Email Password Reset Link',
     'Register' => 'Register',
+    'Post' => 'Post',
 
 ];
