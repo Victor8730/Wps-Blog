@@ -29,6 +29,13 @@
                 </div>
             </header>
 
+
+            <!-- Menu TO DO -->
+            <nav class="bg-gray-800">
+                {{ $menu }}
+            </nav>
+
+
             <!-- Page Content -->
             <main>
                 {{ $slot }}

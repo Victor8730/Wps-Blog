@@ -15,7 +15,6 @@ use Illuminate\Support\Collection;
  * @property Collection|Model[] $localizations
  * @method static Builder|LocalizedModel withLocalization(string $locale)
  */
-
 class LocalizedModel extends Model
 {
     use HasFactory;
@@ -44,9 +43,9 @@ class LocalizedModel extends Model
      * @param Builder $query
      * @param string $locale
      */
-    public function scopeWithLocalization(Builder $query, string $locale)
+    public function scopeWithLocalization(Builder $query, string $locale): void
     {
-        $filter = function($query) use ($locale) {
+        $filter = function ($query) use ($locale) {
             /** @var Builder $query */
             $query->where('lang', $locale);
         };
@@ -61,8 +60,8 @@ class LocalizedModel extends Model
     /**
      * @return string
      */
-    private function getLocalizationModelName()
+    private function getLocalizationModelName(): string
     {
-        return get_class($this).'Localization';
+        return get_class($this) . 'Localization';
     }
 }

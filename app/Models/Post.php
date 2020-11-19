@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
@@ -45,6 +44,7 @@ class Post extends LocalizedModel
     public $timestamps = true;
 
     protected $fillable = [
+        'user_id',
         'slug',
         'publish',
         'image',
@@ -82,13 +82,13 @@ class Post extends LocalizedModel
         return $this->hasMany(Image::class);
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function meta()
-    {
-        return $this->hasOne(Meta::class);
-    }
+//    /**
+//     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+//     */
+//    public function meta()
+//    {
+//        return $this->hasOne(Meta::class);
+//    }
 
     /**
      * @param Builder $query

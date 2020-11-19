@@ -22,6 +22,7 @@ class CreateMetasTable extends Migration
                 ->references('id')
                 ->on('posts')
                 ->onDelete('cascade');
+            $table->string('lang', 2);
             $table->string('description');
             $table->string('keywords');
             $table->string('title');

@@ -17,8 +17,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $locale = App::getLocale();
-        $posts = Post::withLocalization($locale)->firstOrFail();
+
+        $posts = Post::all();
         return view('post.index', compact('posts'))
             ->with('i', (request()->input('page', 1) - 1) * 10);
     }
@@ -26,11 +26,11 @@ class PostController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function create()
     {
-        //
+        return view('post.create');
     }
 
     /**
@@ -41,9 +41,17 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'slug' => 'required',
+        ]);
+
+
         $post = new Post();
-        // Заполняем модель данными
-        $post->save();
+        $post->create([
+            'slug' => $request->input('slug'),
+            'publish' => $request->input('publish'),
+            'user_id' => Auth::id(),
+        ]);
 
         foreach($request->input('localization', []) as $k => $i) {
             /** @var PostLocalization $locale */
@@ -52,7 +60,8 @@ class PostController extends Controller
         }
 
         return redirect()
-            ->route('posts.edit', $post->id);
+            ->route('post.index')
+            ->with('success', 'Post created successfully.');
     }
 
     /**
@@ -86,7 +95,7 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        // Обновляем данные
+
         $post->update();
 
         // Обновляем (или создаем если не существует) локализованные данные
@@ -112,6 +121,6 @@ class PostController extends Controller
         $post->delete();
 
         return redirect()
-            ->route('posts.index');
+            ->route('post.index');
     }
 }
