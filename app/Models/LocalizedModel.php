@@ -14,6 +14,7 @@ use Illuminate\Support\Collection;
  * @property Model|null $localization
  * @property Collection|Model[] $localizations
  * @method static Builder|LocalizedModel withLocalization(string $locale)
+ * @method static Builder|LocalizedModel withLocalizations()
  */
 class LocalizedModel extends Model
 {
@@ -54,6 +55,21 @@ class LocalizedModel extends Model
             ->whereHas('localization', $filter)
             ->with([
                 'localization' => $filter
+            ]);
+    }
+
+    /**
+     * @param Builder $query
+     */
+    public function scopeWithLocalizations(Builder $query): void
+    {
+        $filter = function ($query) {
+        };
+
+        $query
+            ->whereHas('localizations', $filter)
+            ->with([
+                'localizations' => $filter
             ]);
     }
 

@@ -82,13 +82,13 @@ class Post extends LocalizedModel
         return $this->hasMany(Image::class);
     }
 
-//    /**
-//     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-//     */
-//    public function meta()
-//    {
-//        return $this->hasOne(Meta::class);
-//    }
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function meta()
+    {
+        return $this->hasOne(Meta::class);
+    }
 
     /**
      * @param Builder $query

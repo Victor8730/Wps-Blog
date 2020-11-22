@@ -8,9 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class MetaLocalization extends Model
 {
     use HasFactory;
-
+    /**
+     * The attributes that are mass assignable.
+     * Array of fields from the database
+     * @var array|string[]
+     */
     protected $fillable = [
-        'post_id',
+        'meta_id',
         'lang',
         'description',
         'keywords',
@@ -23,8 +27,8 @@ class MetaLocalization extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function meta()
+    public function post()
     {
-        return $this->belongsTo(Meta::class);
+        return $this->belongsTo(Post::class);
     }
 }

@@ -23,7 +23,8 @@ class CreatePostLocalizationsTable extends Migration
                 ->on('posts')
                 ->onDelete('cascade');
             $table->string('lang', 2);
-            $table->string('name', 40);
+            $table->string('name', 40)
+                ->nullable();
             $table->string('preview')
                 ->nullable();
             $table->text('content');

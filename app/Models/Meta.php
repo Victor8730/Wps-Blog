@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property Post $post
  */
-class Meta extends Model
+class Meta extends LocalizedModel
 {
     use HasFactory;
 
@@ -40,11 +40,8 @@ class Meta extends Model
      * @var array|string[]
      */
     protected $fillable = [
+        'id',
         'post_id',
-        'description',
-        'keywords',
-        'title',
-        'h1',
     ];
 
     /**
