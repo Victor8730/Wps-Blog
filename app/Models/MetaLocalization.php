@@ -27,8 +27,8 @@ class MetaLocalization extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function post()
+    public function meta()
     {
-        return $this->belongsTo(Post::class);
+        return $this->belongsTo(Meta::class);
     }
 }

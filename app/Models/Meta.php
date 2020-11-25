@@ -45,7 +45,7 @@ class Meta extends LocalizedModel
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function post()
     {

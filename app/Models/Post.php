@@ -83,7 +83,7 @@ class Post extends LocalizedModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\hasOne
      */
     public function meta()
     {

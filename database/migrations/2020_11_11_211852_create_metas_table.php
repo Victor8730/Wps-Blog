@@ -22,7 +22,6 @@ class CreateMetasTable extends Migration
                 ->references('id')
                 ->on('posts')
                 ->onDelete('cascade');
-            $table->timestamps();
         });
     }
 

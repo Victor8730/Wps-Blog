@@ -9,6 +9,7 @@ use App\Models\PostLocalization;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class PostController extends Controller
 {
@@ -19,9 +20,13 @@ class PostController extends Controller
      */
     public function index()
     {
-       // $posts = Post::withLocalizations()->get();
-        $posts = Post::find(36)->meta->withLocalizations()->get();
-        return view('post.index', compact('posts'))
+        $locale = App::getLocale();
+        // $posts = Post::withLocalizations()->get();
+        // $posts = Post::find(36)->meta->withLocalizations()->get();
+        $posts = Post::withLocalizations()->with(['meta' => function ($query){
+            $query->withLocalizations();
+        }])->get();
+        return view('post.index', compact('posts', 'locale'))
             ->with('i', (request()->input('page', 1) - 1) * 10);
     }
 
@@ -32,7 +37,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('post.create');
+        $locales = LaravelLocalization::getSupportedLocales();
+
+        return view('post.create', compact('locales'));
     }
 
     /**
