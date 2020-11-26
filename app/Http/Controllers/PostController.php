@@ -76,6 +76,10 @@ class PostController extends Controller
                 ->create($i + ['lang' => $k]);
         }
 
+//        $cat = Category::create([
+//            'post_id' => $post->id,
+//        ]);
+
         return redirect()
             ->route('post.index')
             ->with('success', 'Post created successfully.');
