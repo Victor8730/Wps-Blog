@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
@@ -35,3 +36,4 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/adm-panel', function () {
 })->name('adm');
 
 Route::resource('/adm-panel/post', PostController::class)->middleware('auth');
+Route::resource('/adm-panel/categories', CategoryController::class)->middleware('auth');

@@ -13,15 +13,19 @@
                                 @method('PUT')
                             @endif
 
-
                             <div class="col-span-6 sm:col-span-6">
                                 <div class="flex items-center h-10">
-                                    <label for="slug" class="font-medium text-gray-700">Name</label>
-                                    <div class="ml-2 w-full">
-                                        <input type="text" name="name"
-                                               class="mt-1 block w-full h-8 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none sm:text-sm"
-                                               value="{{ isset($typeForm) ? $post->slug  : null }}">
-                                    </div>
+                                    <label for="name" class="font-medium text-gray-700">Name</label>
+                                    @foreach($locales as $localeCode => $locale)
+                                        <div class="ml-2 w-full">
+                                            <input name="localization[{{$localeCode}}][name]"
+                                                   class="mt-1 block w-full border border-gray-300 bg-white rounded-md shadow-sm"
+                                                   value="{{ (isset($typeForm) && isset($post->localizations) && $post->localizations[$loop->index]->lang == $localeCode) ? $post->localizations[$loop->index]->name : null }}">
+                                            <p class="mb-2 text-sm text-gray-500">
+                                                {{$locale['native']}}
+                                            </p>
+                                        </div>
+                                    @endforeach
                                 </div>
                             </div>
 
@@ -35,7 +39,8 @@
                                            class="block text-sm font-medium text-gray-700">Publish</label>
                                     <div class="ml-2">
                                         <input name="publish" type="checkbox"
-                                               class="block focus:ring-green-500 h-4 w-4 text-green-600 border-gray-300 rounded">
+                                               class="block focus:ring-green-500 h-4 w-4 text-green-600 border-gray-300 rounded"
+                                            {{ (isset($typeForm) && $post->publish ===1) ? 'checked' : null }}>
                                     </div>
                                 </div>
                                 <div class="ml-3 text-sm">
@@ -93,14 +98,14 @@
                                     <div class="border-t border-gray-200 py-2"></div>
 
                                     <div class="px-4 py-1 sm:px-3">
-                                        <h4 class="px-4 py-1 inline-flex leading-5 rounded-full bg-gray-100 text-green-800">
+                                        <h4 class="px-4 py-1 inline-flex w-full leading-5 rounded-md bg-gray-100 text-green-800">
                                             Content
                                         </h4>
                                         @foreach($locales as $localeCode => $locale)
                                             <div class="col-span-6 sm:col-span-4">
                                                 <div class="mt-1">
                                     <textarea rows="5" name="localization[{{$localeCode}}][content]"
-                                              class="block w-full border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none sm:text-sm"></textarea>
+                                              class="block w-full border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none sm:text-sm">{{ (isset($typeForm) && isset($post->localizations) && $post->localizations[$loop->index]->lang == $localeCode) ? $post->localizations[$loop->index]->content : null }}</textarea>
                                                 </div>
                                                 <p class="mb-2 text-sm text-gray-500">
                                                     {{$locale['native']}}
@@ -111,14 +116,14 @@
 
                                     <div class="px-4 py-1 sm:px-3">
                                         <div class="border-t border-gray-200 py-2"></div>
-                                        <h4 class="px-4 py-1 inline-flex leading-5 rounded-full bg-gray-100 text-green-800">
+                                        <h4 class="px-4 py-1 inline-flex w-full leading-5 rounded-md  bg-gray-100 text-green-800">
                                             Preview
                                         </h4>
                                         @foreach($locales as $localeCode => $locale)
                                             <div class="col-span-6 sm:col-span-4">
                                                 <div class="mt-1">
                                     <textarea rows="5" name="localization[{{$localeCode}}][preview]"
-                                              class="block w-full border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none sm:text-sm"></textarea>
+                                              class="block w-full border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none sm:text-sm">{{ (isset($typeForm) && isset($post->localizations) && $post->localizations[$loop->index]->lang == $localeCode) ? $post->localizations[$loop->index]->preview : null }}</textarea>
                                                 </div>
                                                 <p class="mb-2 text-sm text-gray-500">
                                                     {{$locale['native']}}
@@ -142,13 +147,14 @@
                                     <div class="border-t border-gray-200 py-1"></div>
 
                                     <div class="px-4 py-1 sm:px-3">
-                                        <h4 class="px-4 py-1 inline-flex leading-5 rounded-full bg-gray-100 text-green-800">
+                                        <h4 class="px-4 py-1 inline-flex w-full leading-5 rounded-md bg-gray-100 text-green-800">
                                             Title
                                         </h4>
                                         @foreach($locales as $localeCode => $locale)
-                                            <div class="px-2">
+                                            <div>
                                                 <input name="meta[{{$localeCode}}][title]"
-                                                       class="mt-1 block w-full border border-gray-300 bg-white rounded-md shadow-sm">
+                                                       class="mt-1 block w-full border border-gray-300 bg-white rounded-md shadow-sm"
+                                                       value="{{ (isset($typeForm) && isset($post->localizations) && $post->meta->localizations[$loop->index]->lang == $localeCode) ? $post->meta->localizations[$loop->index]->title : null }}">
                                                 <p class="mb-2 text-sm text-gray-500">
                                                     {{$locale['native']}}
                                                 </p>
@@ -158,13 +164,14 @@
 
                                     <div class="px-4 py-1 sm:px-3">
                                         <div class="border-t border-gray-200 py-2"></div>
-                                        <h4 class="px-4 py-1 inline-flex leading-5 rounded-full bg-gray-100 text-green-800">
+                                        <h4 class="px-4 py-1 inline-flex w-full leading-5 rounded-md  bg-gray-100 text-green-800">
                                             H1
                                         </h4>
                                         @foreach($locales as $localeCode => $locale)
-                                            <div class="px-2">
+                                            <div>
                                                 <input name="meta[{{$localeCode}}][h1]"
-                                                       class="mt-1 block w-full border border-gray-300 bg-white rounded-md shadow-sm">
+                                                       class="mt-1 block w-full border border-gray-300 bg-white rounded-md shadow-sm"
+                                                       value="{{ (isset($typeForm) && isset($post->localizations) && $post->meta->localizations[$loop->index]->lang == $localeCode) ? $post->meta->localizations[$loop->index]->h1 : null }}">
                                                 <p class="mb-2 text-sm text-gray-500">
                                                     {{$locale['native']}}
                                                 </p>
@@ -174,14 +181,13 @@
 
                                     <div class="px-4 py-1 sm:px-3">
                                         <div class="border-t border-gray-200 py-2"></div>
-                                        <h4 class="px-4 py-1 inline-flex leading-5 rounded-full bg-gray-100 text-green-800">
+                                        <h4 class="px-4 py-1 inline-flex w-full leading-5 rounded-md bg-gray-100 text-green-800">
                                             Description
                                         </h4>
                                         @foreach($locales as $localeCode => $locale)
-                                            <div class="px-2">
+                                            <div>
                                                 <textarea name="meta[{{$localeCode}}][description]"
-                                                          class="mt-1 block w-full border border-gray-300 bg-white rounded-md shadow-sm">
-                                                </textarea>
+                                                          class="mt-1 block w-full border border-gray-300 bg-white rounded-md shadow-sm">{{ (isset($typeForm) && isset($post->localizations) && $post->meta->localizations[$loop->index]->lang == $localeCode) ? $post->meta->localizations[$loop->index]->description : null }}</textarea>
                                                 <p class="mb-2 text-sm text-gray-500">
                                                     {{$locale['native']}}
                                                 </p>
@@ -191,14 +197,13 @@
 
                                     <div class="px-4 py-1 sm:px-3">
                                         <div class="border-t border-gray-200 py-2"></div>
-                                        <h4 class="px-4 py-1 inline-flex leading-5 rounded-full bg-gray-100 text-green-800">
+                                        <h4 class="px-4 py-1 inline-flex w-full leading-5 rounded-md  bg-gray-100 text-green-800">
                                             Keywords
                                         </h4>
                                         @foreach($locales as $localeCode => $locale)
-                                            <div class="px-2">
+                                            <div>
                                                 <textarea name="meta[{{$localeCode}}][keywords]"
-                                                          class="mt-1 block w-full border border-gray-300 bg-white rounded-md shadow-sm">
-                                                </textarea>
+                                                          class="mt-1 block w-full border border-gray-300 bg-white rounded-md shadow-sm">{{ (isset($typeForm) && isset($post->localizations)&& $post->meta->localizations[$loop->index]->lang == $localeCode) ? $post->meta->localizations[$loop->index]->keywords : null }}</textarea>
                                                 <p class="mb-2 text-sm text-gray-500">
                                                     {{$locale['native']}}
                                                 </p>

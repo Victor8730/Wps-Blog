@@ -1,8 +1,24 @@
 @if ($errors->any())
-
-    <!-- This example requires Tailwind CSS v2.0+ -->
-    <div class="fixed z-10 inset-0 overflow-y-auto">
-        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+    <script>
+        function modal() {
+            return {
+                state: 'CLOSED', // [CLOSED, TRANSITION, OPEN]
+                open() {
+                    this.state = 'TRANSITION'
+                    setTimeout(() => { this.state = 'OPEN' }, 50)
+                },
+                close() {
+                    alert('1');
+                    this.state = 'TRANSITION'
+                    setTimeout(() => { this.state = 'CLOSED' }, 300)
+                },
+                isOpen() { return this.state === 'OPEN' },
+                isOpening() { return this.state !== 'CLOSED' },
+            }
+        }
+    </script>
+    <div class="fixed z-10 inset-0 overflow-y-auto" x-data="modal()">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0" x-show="isOpen()">
 
             <div class="fixed inset-0 transition-opacity" aria-hidden="true">
                 <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
@@ -33,9 +49,15 @@
                     </div>
                 </div>
                 <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                    <button type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-900 text-base font-medium text-white hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm">
+                    <button type="button" class="modal-close w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-900 text-base font-medium text-white hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm">
                         Ok
                     </button>
+                    <button
+                        x-on:click="close()"
+                        type="button"
+                        class="inline-block font-normal text-center px-3 py-2 leading-normal text-base rounded cursor-pointer text-white bg-gray-600 mr-2"
+                    >Close</button>
+
                 </div>
             </div>
         </div>

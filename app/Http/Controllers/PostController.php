@@ -23,7 +23,7 @@ class PostController extends Controller
         $locale = App::getLocale();
         // $posts = Post::withLocalizations()->get();
         // $posts = Post::find(36)->meta->withLocalizations()->get();
-        $posts = Post::withLocalizations()->with(['meta' => function ($query){
+        $posts = Post::withLocalizations()->with(['meta' => function ($query) {
             $query->withLocalizations();
         }])->get();
         return view('post.index', compact('posts', 'locale'))
@@ -100,11 +100,16 @@ class PostController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id)
     {
-        //
+        $locales = LaravelLocalization::getSupportedLocales();
+        $post = Post::withLocalizations()->with(['meta' => function ($query) {
+            $query->withLocalizations();
+        }])->findOrFail($id);
+
+        return view('post.edit', compact('post', 'locales', 'id'));
     }
 
     /**
@@ -112,22 +117,29 @@ class PostController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param Post $post
+     * @param Meta $meta
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
     public function update(Request $request, Post $post)
     {
-
-        $post->update();
-
-        // Обновляем (или создаем если не существует) локализованные данные
         foreach ($request->input('localization', []) as $k => $i) {
             /** @var PostLocalization $locale */
             $locale = $post->localizations()
                 ->updateOrCreate(['lang' => $k], $i);
         }
 
+        $meta = Meta::where('post_id', $post->id)->get();
+        $metas = Meta::find($meta[0]->id);
+
+        foreach ($request->input('meta', []) as $k => $i) {
+            /** @var MetaLocalization $locale */
+            $locale = $metas->localizations()
+                ->updateOrCreate(['lang' => $k], $i);
+        }
+
         return redirect()
-            ->back();
+            ->back()
+            ->with('success', 'Post update successfully.');
     }
 
     /**

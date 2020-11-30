@@ -19,7 +19,7 @@ use Carbon\Carbon;
  * @property string|null $image
  * @property Carbon $created_at
  * @property Carbon $updated_at
- * @property array|Collection|Category[] $category
+ * @property array|Collection|Category[] $categories
  * @property array|Collection|Tag[] $tags
  * @property array|Collection|Comment $comments
  * @property array|Collection|Image $images
