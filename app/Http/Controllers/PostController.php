@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePost;
 use App\Models\Meta;
 use App\Models\MetaLocalization;
 use App\Models\Post;
@@ -48,12 +49,8 @@ class PostController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePost $request)
     {
-        $request->validate([
-            'slug' => 'required',
-        ]);
-
         $post = Post::create([
             'slug' => $request->input('slug'),
             'publish' => $request->input('publish') == 'on' ? 1 : 0,
@@ -122,6 +119,15 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        $request->validate([
+            'slug' => 'required|unique',
+        ]);
+
+        $post->update([
+            'slug' => $request->input('slug'),
+            'publish' => $request->input('publish') == 'on' ? 1 : 0,
+        ]);
+
         foreach ($request->input('localization', []) as $k => $i) {
             /** @var PostLocalization $locale */
             $locale = $post->localizations()

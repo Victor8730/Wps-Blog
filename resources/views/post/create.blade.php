@@ -19,10 +19,11 @@
                     </div>
                     <div class="sm:block sm:ml-6">
                         <div class="flex space-x-4">
-                            <a href="{{ route('post.store') }}"
-                               class="px-3 py-2 rounded-md text-sm font-medium text-white bg-gray-900 hover:bg-green-500">
+                            <button
+                                class="px-3 py-2 rounded-md text-sm font-medium text-white bg-gray-900 hover:bg-green-500"
+                            onclick="document.getElementById('send-form').submit();">
                                 {{ __('Add') }}
-                            </a>
+                            </button>
                         </div>
                     </div>
                     <div class="sm:block sm:ml-6">
