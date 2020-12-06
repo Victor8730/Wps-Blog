@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePost;
+use App\Models\Category;
 use App\Models\Meta;
 use App\Models\MetaLocalization;
 use App\Models\Post;
@@ -26,9 +27,10 @@ class PostController extends Controller
         // $posts = Post::find(36)->meta->withLocalizations()->get();
         $posts = Post::withLocalizations()->with(['meta' => function ($query) {
             $query->withLocalizations();
-        }])->get();
+        }])->paginate(5);
+
         return view('post.index', compact('posts', 'locale'))
-            ->with('i', (request()->input('page', 1) - 1) * 10);
+            ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -102,27 +104,23 @@ class PostController extends Controller
     public function edit(int $id)
     {
         $locales = LaravelLocalization::getSupportedLocales();
+        $categories = Category::all('id','name');
         $post = Post::withLocalizations()->with(['meta' => function ($query) {
             $query->withLocalizations();
         }])->findOrFail($id);
 
-        return view('post.edit', compact('post', 'locales', 'id'));
+        return view('post.edit', compact('post', 'locales', 'categories', 'id'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param StorePost $request
      * @param Post $post
-     * @param Meta $meta
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(StorePost $request, Post $post)
     {
-        $request->validate([
-            'slug' => 'required|unique',
-        ]);
-
         $post->update([
             'slug' => $request->input('slug'),
             'publish' => $request->input('publish') == 'on' ? 1 : 0,
@@ -149,17 +147,25 @@ class PostController extends Controller
     }
 
     /**
-     *  Remove the specified resource from storage.
+     * Change publish state with scope and redirect to index
      *
-     * @param Post $post
+     * @param $id
      * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
      */
+    public function switch(int $id)
+    {
+        $post = Post::find($id);
+        $post->PublishSwitch();
+
+        return redirect()->back()
+            ->with('success', 'Post state update');
+    }
+
     public function destroy(Post $post)
     {
         $post->delete();
 
-        return redirect()
-            ->route('post.index');
+        return redirect()->route('post.index')
+            ->with('success', 'Post deleted successfully');
     }
 }

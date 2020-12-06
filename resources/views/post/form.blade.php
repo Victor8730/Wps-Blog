@@ -65,11 +65,11 @@
                                 <div class="flex items-center h-10">
                                     <label for="category" class="font-medium text-gray-700">Category</label>
                                     <div class="ml-2 w-full">
-                                        <select id="category"
-                                                class="mt-1 block w-full h-8 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-indigo-500 sm:text-sm">
-                                            <option value="1">United States</option>
-                                            <option value="2">Canada</option>
-                                            <option value="1">Mexico</option>
+                                        <select name="category[]" id="category"
+                                                class="mt-1 block w-full h-9 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-indigo-500 sm:text-sm">
+                                            @foreach($categories as $category)
+                                                <option value="{{$category->id}}">{{$category->name}}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>

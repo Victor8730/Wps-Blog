@@ -13,7 +13,6 @@ use Carbon\Carbon;
  * @package App\Models
  *
  * @property-read int $id
- * @property string $name
  * @property string $slug
  * @property bool $publish
  * @property string|null $image
@@ -96,6 +95,16 @@ class Post extends LocalizedModel
     public function scopePublish(Builder $query)
     {
         $query->where('publish', 1);
+    }
+
+    /**
+     * Change post state
+     *
+     * @return bool
+     */
+    public function scopePublishSwitch()
+    {
+        return $this->update(['publish' => ($this->publish == 1) ? 0 : 1]);
     }
 
     /**

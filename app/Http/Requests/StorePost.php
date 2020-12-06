@@ -25,16 +25,16 @@ class StorePost extends FormRequest
     {
         return [
             'slug' => 'required',
-            'localization[ru][content]' => 'required',
-            'localization[uk][content]' => 'required',
-            'localization[ru][preview]' => 'required',
-            'localization[uk][preview]' => 'required',
-            'meta[ru][h1]' => 'required',
-            'meta[uk][h1]' => 'required',
-            'meta[ru][title]' => 'required',
-            'meta[uk][title]' => 'required',
-            'meta[ru][description]' => 'required',
-            'meta[uk][description]' => 'required',
+            'localization.ru.content' => 'required',
+            'localization.uk.content' => 'required',
+            'localization.ru.preview' => 'required',
+            'localization.uk.preview' => 'required',
+            'meta.ru.h1' => 'required',
+            'meta.uk.h1' => 'required',
+            'meta.ru.title' => 'required',
+            'meta.uk.title' => 'required',
+            'meta.ru.description' => 'required',
+            'meta.uk.description' => 'required',
         ];
     }
 
@@ -46,17 +46,17 @@ class StorePost extends FormRequest
     public function messages()
     {
         return [
-            'slug.required' => 'slug is required fields',
-            'localization[ru][content].required' => 'content required',
-            'localization[uk][content].required' => 'content required',
-            'localization[ru][preview].required' => 'preview required',
-            'localization[uk][preview].required' => 'preview required',
-            'meta[ru][h1].required' => 'h1 required',
-            'meta[uk][h1].required' => 'h1 required',
-            'meta[ru][title].required' => 'title required',
-            'meta[uk][title].required' => 'title required',
-            'meta[ru][description].required' => 'description required',
-            'meta[uk][description].required' => 'description required',
+            'slug' => 'slug is required fields',
+            'localization.ru.content.required' => 'content required',
+            'localization.uk.content.required' => 'content uk required',
+            'localization.ru.preview.required' => 'preview required',
+            'localization.uk.preview.required' => 'preview uk required',
+            'meta.ru.h1.required' => 'h1 required',
+            'meta.uk.h1.required' => 'h1 uk required',
+            'meta.ru.title.required' => 'title required',
+            'meta.uk.title.required' => 'title uk required',
+            'meta.ru.description.required' => 'description required',
+            'meta.uk.description.required' => 'description uk required',
         ];
     }
 
